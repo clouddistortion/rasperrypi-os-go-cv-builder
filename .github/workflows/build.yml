@@ -66,6 +66,7 @@ jobs:
           optimize_image: yes
          # copy_repository_path: /opt/pynab
           commands: |
+            sudo apt-get update -y && apt-get install -y git
             echo "installing go"
             curl -s https://dl.google.com/go/go$GO_VERSION.linux-armv6l.tar.gz | sudo tar -C /usr/local -xz
             export PATH=$PATH:/usr/local/go/bin
