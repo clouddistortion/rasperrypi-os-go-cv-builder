@@ -72,8 +72,8 @@ jobs:
       - name: Upload the image artifact
         uses: actions/upload-artifact@v3
         with:
-          name: rasperrypi-os-${{ steps.image_and_branch_name.outputs.IMAGE_NAME_SUFFIX }}.img
-          path: rasperrypi-os-${{ steps.image_and_branch_name.outputs.IMAGE_NAME_SUFFIX }}.img
+          name: rasperrypi-os-${{ steps.image_and_branch_name.outputs.IMAGE_NAME_SUFFIX }}.img.xz
+          path: rasperrypi-os-${{ steps.image_and_branch_name.outputs.IMAGE_NAME_SUFFIX }}.img.xz
           if-no-files-found: error
           retention-days: 1
 
