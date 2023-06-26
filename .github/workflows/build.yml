@@ -73,7 +73,7 @@ jobs:
             cd gocv
             git config --local advice.detachedHead false
             git checkout tags/$GO_CV_TAG
-            #make install
+            make install
 
       - name: Compress the release image
         run: |
