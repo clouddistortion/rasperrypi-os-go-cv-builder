@@ -62,12 +62,8 @@ jobs:
           optimize_image: yes
          # copy_repository_path: /opt/pynab
           commands: |
-            ## Update and install tools
-            apt-get update && apt-get install -y wget
             # install go
-            wget https://dl.google.com/go/go1.20.5.linux-armv6l.tar.gz
-            sudo tar -C /usr/local -xzf go1.20.5.linux-armv6l.tar.gz
-            rm go1.20.5.linux-armv6l.tar.gz
+            curl -s https://dl.google.com/go/go1.20.5.linux-armv6l.tar.gz | sudo tar -C /usr/local -x
             export PATH=$PATH:/usr/local/go/bin
             export GOPATH=/gopath
             mkdir -p $GOPATH
