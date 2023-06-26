@@ -8,6 +8,10 @@ on:
   pull_request:
   workflow_dispatch:
 
+env:
+  GO_VERSION: 1.20.5
+  GO_CV_TAG: v0.33.0
+
 jobs:
   create_image:
     runs-on: ubuntu-latest
@@ -51,34 +55,37 @@ jobs:
           #  echo "CLONE_RELEASE=no" >> $GITHUB_OUTPUT
           fi
       
-      - name: Create Hello World File
+      - name: Build gocv
         uses: pguyot/arm-runner-action@v2
         id: arm_runner_install
         with:
-          image_additional_mb: 4096
+          image_additional_mb: 5120
           base_image: ${{ matrix.base_image }}
           cpu: ${{ matrix.cpu }}
           cpu_info: ${{ matrix.cpu_info }}
           optimize_image: yes
          # copy_repository_path: /opt/pynab
           commands: |
-            # install go
-            curl -s https://dl.google.com/go/go1.20.5.linux-armv6l.tar.gz | sudo tar -C /usr/local -xz
+            echo "installing go"
+            curl -s https://dl.google.com/go/go$GO_VERSION.linux-armv6l.tar.gz | sudo tar -C /usr/local -xz
             export PATH=$PATH:/usr/local/go/bin
-            export GOPATH=/gopath
-            mkdir -p $GOPATH
-            go version
+            echo "installing opencv"
+            cd /tmp
+            git clone https://github.com/hybridgroup/gocv.git
+            cd gocv
+            git checkout tags/$GO_CV_TAG
+            #make install
 
       - name: Compress the release image
         run: |
-          mv ${{ steps.arm_runner_install.outputs.image }} gocv-${{ steps.image_and_branch_name.outputs.IMAGE_NAME_SUFFIX }}.img
-          sudo xz -T 0 -v gocv-${{ steps.image_and_branch_name.outputs.IMAGE_NAME_SUFFIX }}.img
+          mv ${{ steps.arm_runner_install.outputs.image }} gocv-$GO_CV_TAG-${{ steps.image_and_branch_name.outputs.IMAGE_NAME_SUFFIX }}.img
+          sudo xz -T 0 -v gocv-$GO_CV_TAG-${{ steps.image_and_branch_name.outputs.IMAGE_NAME_SUFFIX }}.img
     
       - name: Upload the image artifact
         uses: actions/upload-artifact@v3
         with:
-          name: gocv-${{ steps.image_and_branch_name.outputs.IMAGE_NAME_SUFFIX }}.img.xz
-          path: gocv-${{ steps.image_and_branch_name.outputs.IMAGE_NAME_SUFFIX }}.img.xz
+          name: gocv-$GO_CV_TAG-${{ steps.image_and_branch_name.outputs.IMAGE_NAME_SUFFIX }}.img.xz
+          path: gocv-$GO_CV_TAG-${{ steps.image_and_branch_name.outputs.IMAGE_NAME_SUFFIX }}.img.xz
           if-no-files-found: error
           retention-days: 1
 
