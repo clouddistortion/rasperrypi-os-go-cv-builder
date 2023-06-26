@@ -71,7 +71,7 @@ jobs:
             cd /tmp
             git clone https://github.com/hybridgroup/gocv.git
             cd gocv
-            git config --global advice.detachedHead false
+            git config --local advice.detachedHead false
             git checkout tags/$GO_CV_TAG
             #make install
 
