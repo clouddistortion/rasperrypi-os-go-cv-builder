@@ -71,7 +71,8 @@ jobs:
             cd /tmp
             git clone https://github.com/hybridgroup/gocv.git
             cd gocv
-            git checkout -c advice.detachedHead=false tags/$GO_CV_TAG
+            git config --global advice.detachedHead false
+            git checkout tags/$GO_CV_TAG
             #make install
 
       - name: Compress the release image
