@@ -63,7 +63,7 @@ jobs:
       - name: Compress the release image
         run: |
           mv ${{ steps.image_and_branch_name.outputs.image }} rasperrypi-os-${{ steps.image_and_branch_name.IMAGE_NAME_SUFFIX }}.img
-          sudo xz -T 0 -v rasperrypi-os-${{ steps.image_and_branch_name.IMAGE_NAME_SUFFIX }}.img
+          sudo xz -T 0 -v rasperrypi-os-${{ steps.image_and_branch_name.outputs.IMAGE_NAME_SUFFIX }}.img
     
       - name: Upload the image artifact
         uses: actions/upload-artifact@v3
