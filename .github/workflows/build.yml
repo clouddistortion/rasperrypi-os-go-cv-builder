@@ -68,12 +68,13 @@ jobs:
             curl -s https://dl.google.com/go/go$GO_VERSION.linux-armv6l.tar.gz | sudo tar -C /usr/local -xz
             export PATH=$PATH:/usr/local/go/bin
             echo "installing opencv"
-            cd /tmp
+            mkdir -p /home/pi/src
+            cd /home/pi/src
             git clone https://github.com/hybridgroup/gocv.git
             cd gocv
             git config --local advice.detachedHead false
             git checkout tags/$GO_CV_TAG
-            make install
+            make install_raspi
 
       - name: Compress the release image
         run: |
