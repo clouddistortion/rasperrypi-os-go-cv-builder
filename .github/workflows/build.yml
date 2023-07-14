@@ -75,6 +75,9 @@ jobs:
             git config --local advice.detachedHead false
             git checkout tags/$GO_CV_TAG
             make install_raspi
+            go run ./cmd/version/main.go
+            touch ~/.profile
+            echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.profile
 
       - name: Compress the release image
         run: |
