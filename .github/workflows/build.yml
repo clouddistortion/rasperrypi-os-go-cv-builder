@@ -75,14 +75,17 @@ jobs:
             # git config --local advice.detachedHead false
             # git checkout tags/$GO_CV_TAG
             
-            pwd
             mkdir -p /home/pi/go
             export GOPATH=/home/pi/go
-            go get -u -d gocv.io/x/gocv@$GO_CV_TAG
-            cd $GOPATH/src/gocv.io/x/
-            ls
-            cd $GOPATH/src/gocv.io/x/gocv
-            ls
+            cd /home/pi
+            git clone https://github.com/hybridgroup/gocv.git 
+            mkdir tmpproj
+            cd tmpproj
+            go mod init tmpproj/m
+            go get gocv.io/x/gocv@v0.33.0
+            go get -u -d gocv.io/x/gocv@v0.33.0
+            cp /home/pi/gocv/cmd/version/main.go .
+            go run main.go
             breakexecution
             #make install_raspi
             go run ./cmd/version/main.go
