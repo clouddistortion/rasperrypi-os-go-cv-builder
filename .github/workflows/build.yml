@@ -75,9 +75,12 @@ jobs:
             # git config --local advice.detachedHead false
             # git checkout tags/$GO_CV_TAG
             
-            mkdir ~/go
-            export GOPATH=$HOME/go
+            pwd
+            mkdir -p /home/pi/go
+            export GOPATH=/home/pi/go
             go get -u -d gocv.io/x/gocv@$GO_CV_TAG
+            cd $GOPATH/src/gocv.io/x/
+            ls
             cd $GOPATH/src/gocv.io/x/gocv
             ls
             breakexecution
