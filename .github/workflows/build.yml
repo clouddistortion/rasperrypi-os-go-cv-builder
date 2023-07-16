@@ -72,6 +72,7 @@ jobs:
             export GOPATH=/home/runner/go
             echo "installing opencv"
             mkdir -p /home/runner/src
+            pwd
             cd src
             git clone https://github.com/hybridgroup/gocv.git
             cd gocv
