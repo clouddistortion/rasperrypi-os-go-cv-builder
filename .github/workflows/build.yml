@@ -68,13 +68,8 @@ jobs:
             curl -s https://dl.google.com/go/go$GO_VERSION.linux-armv6l.tar.gz | sudo tar -C /usr/local -xz
             echo "export PATH=$PATH:/usr/local/go/bin/" | sudo tee -a /etc/profile
             export PATH=$PATH:/usr/local/go/bin
-            mkdir -p /home/runner/go
-            export GOPATH=/home/runner/go
+            export GOPATH=/rasperrypi-os-go-cv-builder/go
             echo "installing opencv"
-            mkdir -p /home/runner/src
-            echo $(pwd) > tt
-            cat tt
-            cd src
             git clone https://github.com/hybridgroup/gocv.git
             cd gocv
             git config --local advice.detachedHead false
@@ -82,8 +77,7 @@ jobs:
             make install_raspi
             go run ./cmd/version/main.go
             echo "cleaning up"
-            rm -rf /home/runner/src
-            rm -rf /home/runner/gocv
+            rm -rf /rasperrypi-os-go-cv-builder/gocv
 
       - name: Compress the release image
         run: |
