@@ -1,4 +1,4 @@
-name: Test armv7l cpu option
+name: Build Raspberry PI OS with OpenCV GoCV
 on:
   push:
     branches:
@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  GO_VERSION: 1.20.5
+  GO_VERSION: 1.20.6
   GO_CV_TAG: v0.33.0
 
 jobs:
@@ -66,31 +66,22 @@ jobs:
             sudo apt-get update -y && apt-get install -y git
             echo "installing go"
             curl -s https://dl.google.com/go/go$GO_VERSION.linux-armv6l.tar.gz | sudo tar -C /usr/local -xz
+            echo "export PATH=$PATH:/usr/local/go/bin/" | sudo tee -a /etc/profile
             export PATH=$PATH:/usr/local/go/bin
-            mkdir -p /home/pi/go
-            export GOPATH=/home/pi/go
+            mkdir -p /home/runner/go
+            export GOPATH=/home/runner/go
             echo "installing opencv"
-            mkdir -p /home/pi/src
-            cd /home/pi/src
+            mkdir -p /home/runner/src
+            cd src
             git clone https://github.com/hybridgroup/gocv.git
             cd gocv
             git config --local advice.detachedHead false
             git checkout tags/$GO_CV_TAG
             make install_raspi
             go run ./cmd/version/main.go
-            touch ~/.profile
-            echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.profile
-            
-            echo "Testing GoCV on an example project"
-            cd
-            mkdir tmpproj
-            cd tmpproj
-            go mod init tmpproj/m
-            go get gocv.io/x/gocv@v0.33.0
-            go get -u -d gocv.io/x/gocv@v0.33.0
-            cp /home/pi/src/gocv/cmd/version/main.go .
-            go run main.go
-            
+            echo "cleaning up"
+            rm -rf /home/runner/src
+            rm -rf /home/runner/gocv
 
       - name: Compress the release image
         run: |
