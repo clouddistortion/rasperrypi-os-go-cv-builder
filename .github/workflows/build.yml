@@ -73,7 +73,7 @@ jobs:
             echo "Building for ${{ matrix.cpu }}"
             sudo apt-get update -y && apt-get install -y git
             echo "installing go"
-            curl -s https://go.dev/dl/go$GO_VERSION.linux-${{ matrix.golang_cpu_build }}.tar.gz | sudo tar -C /usr/local -xz
+            curl -s https://dl.google.com/go/go$GO_VERSION.linux-${{ matrix.golang_cpu_build }}.tar.gz | sudo tar -C /usr/local -xz
             # curl -s https://dl.google.com/go/go$GO_VERSION.linux-armv6l.tar.gz | sudo tar -C /usr/local -xz
             echo "export PATH=$PATH:/usr/local/go/bin/" | sudo tee -a /etc/profile
             export PATH=$PATH:/usr/local/go/bin
