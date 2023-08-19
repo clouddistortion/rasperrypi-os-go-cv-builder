@@ -79,14 +79,14 @@ jobs:
             export PATH=$PATH:/usr/local/go/bin
             export GOPATH=/rasperrypi-os-go-cv-builder/go
             echo "installing opencv"
-            #git clone https://github.com/hybridgroup/gocv.git
-            #cd gocv
-            #git config --local advice.detachedHead false
-            #git checkout tags/$GO_CV_TAG
-            #make install_raspi
-            #go run ./cmd/version/main.go
-            #echo "cleaning up"
-            #rm -rf /rasperrypi-os-go-cv-builder/gocv
+            git clone https://github.com/hybridgroup/gocv.git
+            cd gocv
+            git config --local advice.detachedHead false
+            git checkout tags/$GO_CV_TAG
+            make install_raspi
+            go run ./cmd/version/main.go
+            echo "cleaning up"
+            rm -rf /rasperrypi-os-go-cv-builder/gocv
 
       - name: Compress the release image
         run: |
