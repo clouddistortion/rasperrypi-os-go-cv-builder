@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - 'main'
+      - 'pi4_support'
     tags:
       - '*'
   pull_request:
