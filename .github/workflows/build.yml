@@ -82,7 +82,7 @@ jobs:
             cd gocv
             git config --local advice.detachedHead false
             git checkout tags/$GO_CV_TAG
-            if [ '${{ matrix.cpu_build }}' == 'arm64' ]; then make install; elif [ '${{ matrix.cpu_build }}' == 'armv6l' ]; then make install_raspi; else echo "unsupported CPU" exit 1; fi
+            if [ \'${{ matrix.cpu_build }}\' == \'arm64\' ]; then make install; elif [ \'${{ matrix.cpu_build }}\' == \'armv6l\' ]; then make install_raspi; else echo "unsupported CPU" exit 1; fi
             go run ./cmd/version/main.go
             echo "cleaning up"
             rm -rf /rasperrypi-os-go-cv-builder/gocv
