@@ -19,17 +19,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        #target: [2023-05-03-raspios-bullseye-armhf-lite,2023-05-03-raspios-bullseye-arm64-lite]
-        target: [2023-05-03-raspios-bullseye-arm64-lite]
+        target: [2023-05-03-raspios-bullseye-armhf-lite,2023-05-03-raspios-bullseye-arm64-lite]
         include:
-        # - target: 2023-05-03-raspios-bullseye-armhf-lite
-        #   cpu: cortex-a8
-        #   cpu_info: cpuinfo/raspberrypi_zero2_w
-        #   golang_cpu_build: armv6l
-        #   base_image: https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2023-05-03/2023-05-03-raspios-bullseye-armhf-lite.img.xz
+        - target: 2023-05-03-raspios-bullseye-armhf-lite
+          cpu: cortex-a8
+          cpu_info: cpuinfo/raspberrypi_zero2_w
+          cpu_build: armv6l
+          base_image: https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2023-05-03/2023-05-03-raspios-bullseye-armhf-lite.img.xz
         - target: 2023-05-03-raspios-bullseye-arm64-lite
           cpu: cortex-a53
-          golang_cpu_build: arm64
+          cpu_build: arm64
           cpu_info: cpuinfo/raspberrypi_4b
           base_image: https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2023-05-03/2023-05-03-raspios-bullseye-arm64-lite.img.xz
     steps:
@@ -74,8 +73,7 @@ jobs:
             echo "Building for ${{ matrix.cpu }}"
             sudo apt-get update -y && apt-get install -y git
             echo "installing go"
-            curl -s https://dl.google.com/go/go$GO_VERSION.linux-${{ matrix.golang_cpu_build }}.tar.gz | sudo tar -C /usr/local -xz
-            # curl -s https://dl.google.com/go/go$GO_VERSION.linux-armv6l.tar.gz | sudo tar -C /usr/local -xz
+            curl -s https://dl.google.com/go/go$GO_VERSION.linux-${{ matrix.cpu_build }}.tar.gz | sudo tar -C /usr/local -xz
             echo "export PATH=$PATH:/usr/local/go/bin/" | sudo tee -a /etc/profile
             export PATH=$PATH:/usr/local/go/bin
             export GOPATH=/rasperrypi-os-go-cv-builder/go
@@ -84,7 +82,7 @@ jobs:
             cd gocv
             git config --local advice.detachedHead false
             git checkout tags/$GO_CV_TAG
-            make install
+            if [ "${{ matrix.cpu_build }}" == "arm64" ]; then make install; elif [ "${{ matrix.cpu_build }}" == "armv6l" ]; then make install_raspi; else echo "unsupported CPU" exit 1; fi
             go run ./cmd/version/main.go
             echo "cleaning up"
             rm -rf /rasperrypi-os-go-cv-builder/gocv
