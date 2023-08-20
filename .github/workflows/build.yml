@@ -28,9 +28,9 @@ jobs:
         #   golang_cpu_build: armv6l
         #   base_image: https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2023-05-03/2023-05-03-raspios-bullseye-armhf-lite.img.xz
         - target: 2023-05-03-raspios-bullseye-arm64-lite
-          cpu: cortex-a7
+          cpu: cortex-a53
           golang_cpu_build: arm64
-          cpu_info: cpuinfo/raspberrypi_zero2_w_arm64
+          cpu_info: cpuinfo/raspberrypi_4b
           base_image: https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2023-05-03/2023-05-03-raspios-bullseye-arm64-lite.img.xz
     steps:
       - name: Define the image name
@@ -84,7 +84,7 @@ jobs:
             cd gocv
             git config --local advice.detachedHead false
             git checkout tags/$GO_CV_TAG
-            make install_raspi
+            make -i install_raspi
             cat /tmp/opencv/opencv-4.7.0/build/CMakeFiles/CMakeOutput.log
             cat /tmp/opencv/opencv-4.7.0/build/CMakeFiles/CMakeError.log
             go run ./cmd/version/main.go
