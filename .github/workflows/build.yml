@@ -84,9 +84,7 @@ jobs:
             cd gocv
             git config --local advice.detachedHead false
             git checkout tags/$GO_CV_TAG
-            make -i install_raspi
-            cat /tmp/opencv/opencv-4.7.0/build/CMakeFiles/CMakeOutput.log
-            cat /tmp/opencv/opencv-4.7.0/build/CMakeFiles/CMakeError.log
+            make install
             go run ./cmd/version/main.go
             echo "cleaning up"
             rm -rf /rasperrypi-os-go-cv-builder/gocv
