@@ -70,6 +70,9 @@ jobs:
           cpu_info: ${{ matrix.cpu_info }}
           optimize_image: yes
           commands: |
+            ls -la
+            ./scripts/install_opencv.sh
+            if [ \'${{ matrix.cpu_build }}\' == \'arm64\' ]; then make install; elif [ \'${{ matrix.cpu_build }}\' == \'armv6l\' ]; then make install_raspi; else echo "unsupported CPU" exit 1; fi
             echo "Building for ${{ matrix.cpu }}"
             sudo apt-get update -y && apt-get install -y git
             echo "installing go"
