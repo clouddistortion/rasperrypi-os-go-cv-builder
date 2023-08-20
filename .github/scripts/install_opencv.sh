@@ -1,6 +1,5 @@
 #! /bin/bash
 echo "Installing OpenCV"
-if [ "$CPU_BUILD" == "arm64" ]; then make install; elif [ "$CPU_BUILD" == "armv6l" ]; then make install_raspi; else echo "unsupported CPU" exit 1; fi
 echo "Building for $CPU_BUILD"
 sudo apt-get update -y && apt-get install -y git
 echo "installing go"
