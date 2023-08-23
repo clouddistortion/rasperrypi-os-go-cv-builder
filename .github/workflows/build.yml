@@ -15,6 +15,7 @@ env:
 
 jobs:
   create_image:
+    timeout-minutes: 480
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
