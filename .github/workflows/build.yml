@@ -18,6 +18,7 @@ jobs:
     timeout-minutes: 480
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         target: [2023-05-03-raspios-bullseye-armhf-lite,2023-05-03-raspios-bullseye-arm64-lite]
