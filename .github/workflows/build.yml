@@ -73,7 +73,8 @@ jobs:
           optimize_image: yes
           commands: |
             ls -lsah
-            ls -lsah /home/actions/temp/arm-runner/mnt
+            ls -lsah /home/
+            ls -lsah /
             pwd
             exit 1
             curl -s https://raw.githubusercontent.com/clouddistortion/rasperrypi-os-go-cv-builder/pi4_support/.github/scripts/install_opencv.sh --output install_opencv.sh
