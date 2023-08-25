@@ -72,6 +72,9 @@ jobs:
           cpu_info: ${{ matrix.cpu_info }}
           optimize_image: yes
           commands: |
+            ls -lsah
+            pwd
+            exit 1
             curl -s https://raw.githubusercontent.com/clouddistortion/rasperrypi-os-go-cv-builder/pi4_support/.github/scripts/install_opencv.sh --output install_opencv.sh
             chmod +x install_opencv.sh
             export CPU_BUILD=${{ matrix.cpu_build }}
