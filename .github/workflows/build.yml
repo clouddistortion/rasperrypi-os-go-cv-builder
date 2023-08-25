@@ -62,6 +62,7 @@ jobs:
           #  echo "CLONE_RELEASE=no" >> $GITHUB_OUTPUT
           fi
       
+      - uses: actions/checkout@v2
       - name: Build gocv
         uses: pguyot/arm-runner-action@v2
         id: arm_runner_install
