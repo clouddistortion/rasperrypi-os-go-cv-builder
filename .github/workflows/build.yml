@@ -73,13 +73,11 @@ jobs:
           cpu_info: ${{ matrix.cpu_info }}
           optimize_image: yes
           commands: |
-            ls -lsah
-            ls -lsah /home/pi
-            ls -lsah /mnt/
-            pwd
-            exit 1
-            curl -s https://raw.githubusercontent.com/clouddistortion/rasperrypi-os-go-cv-builder/pi4_support/.github/scripts/install_opencv.sh --output install_opencv.sh
+            cp .github/scripts/install_opencv.sh .
+            #curl -s https://raw.githubusercontent.com/clouddistortion/rasperrypi-os-go-cv-builder/pi4_support/.github/scripts/install_opencv.sh --output install_opencv.sh
             chmod +x install_opencv.sh
+            cat install_opencv.sh
+            exit 1
             export CPU_BUILD=${{ matrix.cpu_build }}
             ./install_opencv.sh
             # if [ \'${{ matrix.cpu_build }}\' == \'arm64\' ]; then make install; elif [ \'${{ matrix.cpu_build }}\' == \'armv6l\' ]; then make install_raspi; else echo "unsupported CPU" exit 1; fi
